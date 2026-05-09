@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>GameVerse | Портал о видеоиграх</title>
+    <!-- Google Fonts & Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0c12;
+            color: #eef2ff;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        /* градиентные акценты */
+        :root {
+            --glow-purple: #8b5cf6;
+            --glow-cyan: #06b6d4;
+            --dark-card: #11131f;
+            --border-dim: #1e2130;
+        }
+
+        /* кастомный скролл */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0c12;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2d2f42;
+            border-radius: 10px;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        /* header / навигация */
+        header {
+            background: rgba(10, 12, 18, 0.8);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #1e2130;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 0;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #c084fc, #3b82f6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            color: #eef2ff;
+            background: none;
+            -webkit-background-clip: unset;
+            background-clip: unset;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #cbd5e6;
+            font-weight: 500;
+            transition: 0.2s;
+            font-size: 1rem;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #a78bfa;
+        }
+
+        .btn-outline-light {
+            border: 1px solid #3b3f5c;
+            background: transparent;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-weight: 600;
+            color: #e2e8f0;
+            transition: 0.25s;
+            cursor: default;
+        }
+
+        .btn-outline-light i {
+            margin-right: 6px;
+        }
+
+        /* hero секция */
+        .hero {
+            padding: 80px 0 70px;
+            background: radial-gradient(ellipse at 70% 30%, #14182b, #05070c);
+        }
+
+        .hero-content {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+        }
+
+        .hero-text {
+            flex: 1;
+        }
+
+        .hero-text .badge {
+            background: #8b5cf622;
+            color: #c4b5fd;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 20px;
+            backdrop-filter: blur(4px);
+        }
+
+        .hero-text h1 {
+            font-size: 3.3rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .hero-text h1 i {
+            color: #facc15;
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, #c084fc, #60a5fa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            color: #9ca3af;
+            max-width: 550px;
+            margin-bottom: 30px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 18px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: linear-gradient(95deg, #8b5cf6, #3b82f6);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 40px;
+            font-weight: 700;
+            color: white;
+            cursor: default;
+            transition: 0.2s;
+            box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid #475569;
+            padding: 12px 30px;
+            border-radius: 40px;
+            font-weight: 600;
+            color: #e2e8f0;
+            cursor: default;
+        }
+
+        .hero-image {
+            flex: 0.9;
+            text-align: center;
+        }
+
+        .hero-image i {
+            font-size: 13rem;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
+            color: #334155;
+            transition: 0.3s;
+        }
+
+        /* секция карточек игр */
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 55px;
+        }
+
+        .section-header h2 {
+            font-size: 2.4rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .section-header p {
+            color: #8b9bb5;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .game-card {
+            background: #0f111c;
+            border-radius: 28px;
+            overflow: hidden;
+            border: 1px solid #252a3a;
+            transition: transform 0.2s, border-color 0.2s;
+            backdrop-filter: blur(2px);
+        }
+
+        .game-card:hover {
+            transform: translateY(-6px);
+            border-color: #8b5cf6;
+            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.5);
+        }
+
+        .card-img {
+            height: 170px;
+            background: linear-gradient(145deg, #1a1f2e, #0d0f1a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: #a78bfa;
+        }
+
+        .card-info {
+            padding: 22px 20px 25px;
+        }
+
+        .card-info h3 {
+            font-size: 1.55rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .card-info p {
+            color: #98a2b3;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        .game-tags {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .tag {
+            background: #1e2438;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #b9c3db;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #fbbf24;
+            font-weight: 600;
+        }
+
+        /* киберспорт / новости */
+        .news-section {
+            background: #080b12;
+        }
+
+        .news-flex {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+        }
+
+        .news-card {
+            background: #11131f;
+            border-radius: 28px;
+            flex: 1;
+            min-width: 260px;
+            padding: 28px;
+            border: 1px solid #252a3a;
+            transition: 0.2s;
+        }
+
+        .news-card i {
+            font-size: 2.5rem;
+            color: #8b5cf6;
+            margin-bottom: 20px;
+        }
+
+        .news-card h4 {
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+        }
+
+        .news-date {
+            color: #6b7280;
+            font-size: 0.8rem;
+            margin: 15px 0 10px;
+        }
+
+        /* e-sports таблица */
+        .esports-table-wrapper {
+            overflow-x: auto;
+            background: #0f111c;
+            border-radius: 24px;
+            border: 1px solid #252a3a;
+            padding: 5px;
+        }
+
+        .esports-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        .esports-table th, .esports-table td {
+            padding: 18px 20px;
+            border-bottom: 1px solid #222637;
+        }
+
+        .esports-table th {
+            color: #a5b4fc;
+            font-weight: 600;
+        }
+
+        .team {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+        }
+
+        .team i {
+            font-size: 1.6rem;
+        }
+
+        /* подвал */
+        footer {
+            background: #05070c;
+            border-top: 1px solid #1a1e2c;
+            padding: 50px 0 30px;
+        }
+
+        .footer-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col p {
+            color: #7c85a2;
+            max-width: 260px;
+            margin-top: 12px;
+        }
+
+        .social-icons i {
+            font-size: 1.4rem;
+            margin-right: 18px;
+            color: #6b7280;
+            transition: 0.2s;
+            cursor: default;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid #191e2c;
+            color: #5b677e;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 850px) {
+            .navbar {
+                flex-direction: column;
+                gap: 18px;
+            }
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+            .hero-image i {
+                font-size: 8rem;
+            }
+            .container {
+                padding: 0 20px;
+            }
+            .section {
+                padding: 55px 0;
+            }
+        }
+        @media (max-width: 550px) {
+            .nav-links {
+                gap: 18px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            .hero-buttons .btn-primary, .hero-buttons .btn-secondary {
+                padding: 8px 20px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <div class="navbar">
+            <div class="logo">GAME<span>VERSE</span></div>
+            <ul class="nav-links">
+                <li><a href="#" class="active">Главная</a></li>
+                <li><a href="#">Игры</a></li>
+                <li><a href="#">Киберспорт</a></li>
+                <li><a href="#">Новости</a></li>
+                <li><a href="#">Сообщество</a></li>
+            </ul>
+            <div class="btn-outline-light"><i class="fas fa-user-astronaut"></i> Войти</div>
+        </div>
+    </div>
+</header>
+
+<main>
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container hero-content">
+            <div class="hero-text">
+                <div class="badge"><i class="fas fa-gamepad"></i> Игровой портал 2025</div>
+                <h1>Погрузись в <span class="gradient-text">мир игр</span> <br> без границ <i class="fas fa-crown"></i></h1>
+                <p>Новости, обзоры, киберспорт и крупнейшее комьюнити геймеров. Будь в центре игровой культуры!</p>
+                <div class="hero-buttons">
+                    <div class="btn-primary"><i class="fas fa-rocket"></i> Исследовать</div>
+                    <div class="btn-secondary"><i class="fab fa-discord"></i> Discord</div>
+                </div>
+            </div>
+            <div class="hero-image">
+                <i class="fas fa-gamepad"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- Популярные игры (карточки) -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>🔥 Популярные релизы</h2>
+                <p>Топ игр, которые сейчас на пике — открой для себя новые вселенные</p>
+            </div>
+            <div class="games-grid">
+                <div class="game-card">
+                    <div class="card-img"><i class="fas fa-dragon"></i></div>
+                    <div class="card-info">
+                        <h3>Elden Ring</h3>
+                        <p>Откройте для себя фантастический мир, наполненный опасностями и легендами.</p>
+                        <div class="game-tags">
+                            <span class="tag">RPG</span>
+                            <span class="tag">Open World</span>
+                        </div>
+                        <div class="rating"><i class="fas fa-star"></i> 9.8 / 10</div>
+                    </div>
+                </div>
+                <div class="game-card">
+                    <div class="card-img"><i class="fas fa-robot"></i></div>
+                    <div class="card-info">
+                        <h3>Cyberpunk 2077</h3>
+                        <p>Футуристический мегаполис, киберпанк и свобода действий.</p>
+                        <div class="game-tags">
+                            <span class="tag">Cyberpunk</span>
+                            <span class="tag">Action</span>
+                        </div>
+                        <div class="rating"><i class="fas fa-star"></i> 8.9 / 10</div>
+                    </div>
+                </div>
+                <div class="game-card">
+                    <div class="card-img"><i class="fas fa-ghost"></i></div>
+                    <div class="card-info">
+                        <h3>Valorant</h3>
+                        <p>Тактический шутер от Riot Games с уникальными агентами.</p>
+                        <div class="game-tags">
+                            <span class="tag">Shooter</span>
+                            <span class="tag">Киберспорт</span>
+                        </div>
+                        <div class="rating"><i class="fas fa-star"></i> 9.2 / 10</div>
+                    </div>
+                </div>
+                <div class="game-card">
+                    <div class="card-img"><i class="fas fa-tree"></i></div>
+                    <div class="card-info">
+                        <h3>Genshin Impact</h3>
+                        <p>Аниме-стиль, открытый мир и эпические сражения.</p>
+                        <div class="game-tags">
+                            <span class="tag">Gacha</span>
+                            <span class="tag">Adventure</span>
+                        </div>
+                        <div class="rating"><i class="fas fa-star"></i> 9.1 / 10</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Новости и киберспорт (комбо) -->
+    <section class="section news-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>📰 Игровые новости & события</h2>
+                <p>Все самое важное из мира гейминга и киберспортивных турниров</p>
+            </div>
+            <div class="news-flex">
+                <div class="news-card">
+                    <i class="fas fa-trophy"></i>
+                    <h4>The International 2025</h4>
+                    <p>Призовой фонд турнира по Dota 2 превысил $3,5 млн. Финал пройдет в Германии.</p>
+                    <div class="news-date"><i class="far fa-calendar-alt"></i> 15 октября 2025</div>
+                </div>
+                <div class="news-card">
+                    <i class="fas fa-microchip"></i>
+                    <h4>Новая консоль PlayStation 6</h4>
+                    <p>Sony анонсировала следующее поколение с обратной совместимостью и трассировкой лучей в 8K.</p>
+                    <div class="news-date"><i class="far fa-calendar-alt"></i> 12 октября 2025</div>
+                </div>
+                <div class="news-card">
+                    <i class="fas fa-fire"></i>
+                    <h4>Обновление 2.0 в Cyberpunk</h4>
+                    <p>Полный ребаланс, новая система полиции и районы Ночного города стали еще живее.</p>
+                    <div class="news-date"><i class="far fa-calendar-alt"></i> 8 октября 2025</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Киберспортивные рейтинги -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2><i class="fas fa-medal"></i> Киберспорт — топ команд</h2>
+                <p>Актуальные мировые рейтинги по дисциплинам CS2, League of Legends и Valorant</p>
+            </div>
+            <div class="esports-table-wrapper">
+                <table class="esports-table">
+                    <thead>
+                        <tr><th>#</th><th>Команда</th><th>Игра</th><th>Побед / Поражений</th><th>Рейтинг</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>1</td><td class="team"><i class="fas fa-skull"></i> Fnatic</td><td>CS2</td><td>24-6</td><td>1923</td></tr>
+                        <tr><td>2</td><td class="team"><i class="fas fa-dragon"></i> T1 Esports</td><td>LoL</td><td>18-4</td><td>1887</td></tr>
+                        <tr><td>3</td><td class="team"><i class="fas fa-bolt"></i> Sentinels</td><td>Valorant</td><td>21-7</td><td>1854</td></tr>
+                        <tr><td>4</td><td class="team"><i class="fas fa-crown"></i> G2 Gaming</td><td>CS2</td><td>20-8</td><td>1829</td></tr>
+                        <tr><td>5</td><td class="team"><i class="fas fa-cloud-moon"></i> DRX</td><td>Valorant</td><td>17-5</td><td>1796</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p style="margin-top: 20px; text-align: center; font-size: 0.85rem; color:#6b7b98;">* рейтинг обновляется еженедельно на основе официальных матчей</p>
+        </div>
+    </section>
+
+    <!-- Цитата и призыв к действию -->
+    <section class="section" style="padding: 30px 0 70px;">
+        <div class="container">
+            <div style="background: linear-gradient(120deg, #0b0e1a, #111522); border-radius: 48px; padding: 50px 30px; text-align: center; border: 1px solid #2a2f44;">
+                <h3 style="font-size: 1.9rem; margin-bottom: 16px;"><i class="fas fa-headset"></i> Присоединяйся к гильдии геймеров</h3>
+                <p style="max-width: 600px; margin: 0 auto 28px; color: #b9c3db;">Тысячи игроков уже обсуждают новинки, делятся тактиками и находят друзей. Стань частью GameVerse.</p>
+                <div class="btn-primary" style="display: inline-block; background: #8b5cf6;"><i class="fab fa-telegram-plane"></i> Перейти в сообщество</div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <div class="logo" style="font-size: 1.8rem;">GAME<span>VERSE</span></div>
+                <p>Игровой портал №1 в СНГ. Новости, гайды, киберспорт и живые трансляции.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Разделы</h4>
+                <ul style="list-style: none; margin-top: 12px;">
+                    <li style="margin-bottom: 8px;"><a href="#" style="color:#9ca8c3; text-decoration: none;">Обзоры игр</a></li>
+                    <li style="margin-bottom: 8px;"><a href="#" style="color:#9ca8c3; text-decoration: none;">Киберспорт</a></li>
+                    <li style="margin-bottom: 8px;"><a href="#" style="color:#9ca8c3; text-decoration: none;">Турнирная таблица</a></li>
+                    <li style="margin-bottom: 8px;"><a href="#" style="color:#9ca8c3; text-decoration: none;">Стримеры</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Контакты</h4>
+                <p style="margin-top: 12px;"><i class="fas fa-envelope"></i> hello@gameverse.ru</p>
+                <p><i class="fab fa-discord"></i> discord.gg/gameverse</p>
+                <div class="social-icons" style="margin-top: 18px;">
+                    <i class="fab fa-twitter"></i>
+                    <i class="fab fa-youtube"></i>
+                    <i class="fab fa-tiktok"></i>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>© 2025 GameVerse — для всех, кто любит видеоигры. Все права защищены.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- легкий эффект для ссылок (просто стиль) -->
+</body>
+</html>
